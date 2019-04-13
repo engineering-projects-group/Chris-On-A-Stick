@@ -56,11 +56,11 @@ byte Q4 = 44;
 byte StQ = 42;
 
 //=====VOIDS=====
-void drive2(byte S1, byte S2, float distIn, float diameter = 8, const float pi = 3.1415f){
+void drive2(byte S1, byte S2, float distIn, float diameter){
   //STEPPER 1
   if(S1 == 1){
     //drive STP1 forward
-   step1.moveTo(diameter * pi * 2048);
+   step1.moveTo(diameter * 3.1415f * 2048);
   }
   else if(S1 == 0){
     //neutral
@@ -69,7 +69,10 @@ void drive2(byte S1, byte S2, float distIn, float diameter = 8, const float pi =
     //drive STP1 backward
     step1.moveTo(diameter * pi * -2048);
   }
-  
+}
+void rotate2(float angle, float diameter, bool left){
+  //insert turning code here. both motors should turn.
+}
   //===========================
   //STEPPER 2
   if(S2 == 1){
@@ -139,7 +142,7 @@ void loop() {
         case 0x02:
         Serial.println("Pin Pressed : 2");
         //go forward
-        drive2(1,1,distance,8,3.1415);
+        drive2(1,1,distance,8);
         break;
         
         case 0x03:
@@ -156,7 +159,7 @@ void loop() {
         case 0x05:
         Serial.println("Pin Pressed : 5");
         //backward
-        drive2(-1,-1,distance,8,3.1415);
+        drive2(-1,-1,distance,8);
         break;
         
         case 0x06:
