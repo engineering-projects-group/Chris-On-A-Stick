@@ -61,26 +61,26 @@ void drive2(byte S1, byte S2, float distIn, float diameter){
   //STEPPER 1
   if(S1 == 1){
     //drive STP1 forward
-   step1.moveTo(diameter * 3.1415f * 2048);
+   step1.moveTo(((distIn / (diameter * 3.1415f)) * 2048);
   }
   else if(S1 == 0){
     //neutral
   }
   else if(S1 == -1){
     //drive STP1 backward
-    step1.moveTo(diameter * 3.1415f * -2048);
+    step1.moveTo(((distIn / (diameter * 3.1415f)) * -2048);
   }
   //STEPPER 2
   if(S2 == 1){
-  //drive STP2 forward
-  step2.moveTo(diameter * 3.1415f * 2048);
+    //drive STP2 forward
+    step2.moveTo(((distIn / (diameter * 3.1415f)) * 2048);
   }
   else if(S2 == 0){
-  //neutral
+    //neutral
   }
   else if(S2 == -1){
-  //drive STP2 backward
-  step1.moveTo(diameter * 3.1415 * -2048);
+    //drive STP2 backward
+    step2.moveTo(((distIn / (diameter * 3.1415f)) * -2048);
   }
 }
 
