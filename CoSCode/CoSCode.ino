@@ -88,11 +88,11 @@ void drive2(byte S1, byte S2, float distIn, float diameter){
 void rotate2(float angle, float diameter, float wheelDistance){
   //find decimal value of angle
   float calcAngle;
-  calcAngle == angle / 360.0f;
+  calcAngle = angle / 360.0f;
   
   //find distance required to execute turn
   float calcDistance;
-  calcDistance == (calcAngle * 3.1415f * wheelDistance) / 2;
+  calcDistance = (calcAngle * 3.1415f * wheelDistance) / 2;
   
   //find motor rotations required to execute distance
   step1.moveTo((calcDistance / (diameter * 3.1415f)) * 2048);
