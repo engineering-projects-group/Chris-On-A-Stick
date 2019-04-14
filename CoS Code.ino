@@ -61,32 +61,35 @@ void drive2(byte S1, byte S2, float distIn, float diameter){
   //STEPPER 1
   if(S1 == 1){
     //drive STP1 forward
-   step1.moveTo(((distIn / (diameter * 3.1415f)) * 2048);
+   step1.moveTo((distIn / (diameter * 3.1415f)) * 2048);
   }
   else if(S1 == 0){
     //neutral
   }
   else if(S1 == -1){
     //drive STP1 backward
-    step1.moveTo(((distIn / (diameter * 3.1415f)) * -2048);
+    step1.moveTo((distIn / (diameter * 3.1415f)) * -2048);
   }
   //STEPPER 2
   if(S2 == 1){
     //drive STP2 forward
-    step2.moveTo(((distIn / (diameter * 3.1415f)) * 2048);
+    step2.moveTo((distIn / (diameter * 3.1415f)) * 2048);
   }
   else if(S2 == 0){
     //neutral
   }
   else if(S2 == -1){
     //drive STP2 backward
-    step2.moveTo(((distIn / (diameter * 3.1415f)) * -2048);
+    step2.moveTo((distIn / (diameter * 3.1415f)) * -2048);
   }
 }
 
 //Rotate with angle
-void rotate2(float angle, float diameter, bool left){
-  //insert turning code here. both motors should turn.
+void rotate2(float angle, float diameter, float wheelDistance){
+  //insert turning code here. both motors should turn in a point turn.
+  float calcangle;
+  calcangle == angle + 1.0f;
+  
 }
 
 //=====INITIAL CODE=====
