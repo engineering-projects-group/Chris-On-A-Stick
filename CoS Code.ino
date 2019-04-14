@@ -86,10 +86,17 @@ void drive2(byte S1, byte S2, float distIn, float diameter){
 
 //Rotate with angle
 void rotate2(float angle, float diameter, float wheelDistance){
-  //insert turning code here. both motors should turn in a point turn.
-  float calcangle;
-  calcangle == angle + 1.0f;
+  //find decimal value of angle
+  float calcAngle;
+  calcAngle == angle / 360.0f;
   
+  //find distance required to execute turn
+  float calcDistance;
+  calcDistance == calcAngle * 3.1415f * wheelDistance;
+  
+  //find motor rotations required to execute distance
+  step1.moveTo((calcDistance / (diameter * 3.1415f)) * 2048)
+  step2.moveTo((calcDistance / (diameter * 3.1415f)) * -2048)
 }
 
 //=====INITIAL CODE=====
