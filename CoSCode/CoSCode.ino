@@ -202,10 +202,10 @@ void loop() {
         Serial.println("Pin Pressed : #");
         break;    
       }
-      int x = 1000000;
-      step1.moveTo(x);
-      step2.moveTo(-1 * x);
   }
+  int x = 1000000
+  step1.moveTo(x);
+  step2.moveTo(-1 * x);
 }
 
 
