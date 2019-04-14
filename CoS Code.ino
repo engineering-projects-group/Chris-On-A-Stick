@@ -92,11 +92,11 @@ void rotate2(float angle, float diameter, float wheelDistance){
   
   //find distance required to execute turn
   float calcDistance;
-  calcDistance == calcAngle * 3.1415f * wheelDistance;
+  calcDistance == (calcAngle * 3.1415f * wheelDistance) / 2;
   
   //find motor rotations required to execute distance
-  step1.moveTo((calcDistance / (diameter * 3.1415f)) * 2048)
-  step2.moveTo((calcDistance / (diameter * 3.1415f)) * -2048)
+  step1.moveTo((calcDistance / (diameter * 3.1415f)) * 2048);
+  step2.moveTo((calcDistance / (diameter * 3.1415f)) * -2048);
 }
 
 //=====INITIAL CODE=====
