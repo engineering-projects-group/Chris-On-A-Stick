@@ -141,7 +141,7 @@ void loop() {
   if(signal == HIGH)	/* If new pin pressed */
    {
     delay(250);
-    number = ( 0x00 | (digitalRead(Q1)<<0) | (digitalRead(Q2)<<1) | (digitalRead(Q3)<<2) | (digitalRead(Q2)<<3) );
+    number = ( 0x00 | (digitalRead(Q1)<<0) | (digitalRead(Q2)<<1) | (digitalRead(Q3)<<2) | (digitalRead(Q4)<<3) );
       switch (number)
       {
         case 0x01:
