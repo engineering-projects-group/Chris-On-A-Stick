@@ -35,7 +35,7 @@ ROBOT CONTROL v1.0
 
 //=====VARIABLES=====
 bool FlyByWire; //if bot is in FBY or not
-const int StepSpeed = 512;
+float StepSpeed = 512.0f;
 ; //the speed of the steppers
 const float DFdistance = 5.0f; //inches per turn
 float distance; //variable inches per turn
@@ -49,38 +49,50 @@ AccelStepper step1(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
 AccelStepper step2(AccelStepper::FULL4WIRE, 2, 4, 3, 5);
 
 //mt8870 dtmf 
-byte Q1 = 50;
-byte Q2 = 48;
-byte Q3 = 46;
-byte Q4 = 44;
-byte StQ = 42;
+byte Q1 = 18;
+byte Q2 = 17;
+byte Q3 = 16;
+byte Q4 = 15;
+byte StQ = 14;
 
 //=====VOIDS=====
 //Go with Inches
-void drive2(byte S1, byte S2, float distIn, float diameter){
+void drive2(int S1, int S2, float distIn, float diameter){
+  Serial.println("distIn: ");
+  Serial.println(distIn);
+  Serial.println("diameter: ");
+  Serial.println(diameter);
+  Serial.println("denominator: ");
+  Serial.println((diameter * 3.1415f));
+  Serial.println("-------");
   //STEPPER 1
   if(S1 == 1){
     //drive STP1 forward
-   step1.moveTo((distIn / (diameter * 3.1415f)) * 2048);
+   Serial.println((int)round((distIn / (diameter * 3.1415f)) * 2048));
+   step1.moveTo(step1.currentPosition() + ((int)round((distIn / (diameter * 3.1415f)) * 2048)));
   }
   else if(S1 == 0){
     //neutral
   }
   else if(S1 == -1){
     //drive STP1 backward
-    step1.moveTo((distIn / (diameter * 3.1415f)) * -2048);
+    Serial.println("s1 backward: ");
+    Serial.println(step1.currentPosition() + ((int)round((distIn / (diameter * 3.1415f)) * -2048)));
+    step1.moveTo(step1.currentPosition() + ((int)round((distIn / (diameter * 3.1415f)) * -2048)));
   }
   //STEPPER 2
   if(S2 == 1){
     //drive STP2 forward
-    step2.moveTo((distIn / (diameter * 3.1415f)) * 2048);
+    step2.moveTo(step2.currentPosition() + ((int)round((distIn / (diameter * 3.1415f)) * -2048)));
   }
   else if(S2 == 0){
     //neutral
   }
   else if(S2 == -1){
     //drive STP2 backward
-    step2.moveTo((distIn / (diameter * 3.1415f)) * -2048);
+    Serial.println("s2 backward: ");
+    Serial.println(step2.currentPosition() + ((int)round((distIn / (diameter * 3.1415f)) * 2048)));
+    step2.moveTo(step2.currentPosition() + ((int)round((distIn / (diameter * 3.1415f)) * 2048)));
   }
 }
 
@@ -115,7 +127,7 @@ void setup() {
   lcd.print("CHRIS ON A STICK");
   lcd.setCursor(1,2);
   lcd.print("TELEPRESENCE ROBOT");
-  delay(2000);
+  //delay(2000);
   
   //==INITIALIZE MOTORS==
     step1.setMaxSpeed(StepSpeed);
@@ -125,10 +137,15 @@ void setup() {
     step2.setAcceleration(200.0);
     
   //==PREPARE VARIABLES==
-  distance == DFdistance;
+  distance = DFdistance;
   
   //==DEBUG (SERIAL)==
   Serial.begin(9600);
+  /*
+  long int x = 100000;
+  step1.moveTo(x);
+  step2.moveTo(-1 * x);
+  */
 }
 //
 
@@ -138,7 +155,7 @@ void loop() {
   //===DTMF DECODING AND EXECUTION===
   bool signal ;  
   signal = digitalRead(StQ);
-  if(signal == HIGH)	/* If new pin pressed */
+  if(signal == HIGH)  /* If new pin pressed */
    {
     delay(250);
     number = ( 0x00 | (digitalRead(Q1)<<0) | (digitalRead(Q2)<<1) | (digitalRead(Q3)<<2) | (digitalRead(Q4)<<3) );
@@ -147,11 +164,12 @@ void loop() {
         case 0x01:
         Serial.println("Pin Pressed : 1");
         //increase distance
-        distance == distance + 0.5f;
+        distance = distance + 0.5f;
         break;
         
         case 0x02:
         Serial.println("Pin Pressed : 2");
+
         //go forward
         drive2(1,1,distance,8);
         break;
@@ -159,7 +177,7 @@ void loop() {
         case 0x03:
         Serial.println("Pin Pressed : 3");
         //decrease distance
-        distance == distance - 0.5f;
+        distance = distance - 0.5f;
         break;
         
         case 0x04:
@@ -178,7 +196,7 @@ void loop() {
         //turn right
         break;
         
-        case 7:
+        case 0x07:
         Serial.println("Pin Pressed : 7");
         break;
         
@@ -200,12 +218,11 @@ void loop() {
         
         case 0x0C:
         Serial.println("Pin Pressed : #");
-        break;    
+        break;   
       }
   }
-  long int x = 1000000;
-  step1.moveTo(x);
-  step2.moveTo(-1 * x);
+    step1.run();
+    step2.run();
 }
 
 
